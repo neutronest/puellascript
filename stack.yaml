@@ -3,4 +3,15 @@ compiler-check: newer-minor
 allow-newer: true
 system-ghc: true
 extra-deps:
-- ghc-paths-0.1.0.9
+  - clock-0.7.2
+  - extra-1.5.2
+  - ghc-paths-0.1.0.9
+  - hashable-1.2.6.0
+  - js-flot-0.8.3
+  - js-jquery-3.2.1
+  - primitive-0.6.2.0
+  - random-1.1
+  - shake-0.15.11
+  - text-1.2.2.1
+  - unordered-containers-0.2.8.0
+  - utf8-string-1.0.1.1

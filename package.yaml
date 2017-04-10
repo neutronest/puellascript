@@ -17,8 +17,10 @@ ghc-options: -Wall
 
 dependencies:
   - base >= 4.10 && < 5
+  - Cabal
   - ghc
   - ghc-paths
+  - shake
 
 library:
   source-dirs: src

@@ -25,9 +25,9 @@ before_install:
   - mkdir -p ~/.local/bin
   - export PATH=~/.local/bin:/opt/ghc/head/bin:$PATH
   - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-  - stack --no-terminal build --only-dependencies
+  - stack --no-terminal build --only-dependencies --haddock --haddock-deps
 
 install: true
 
 script:
-  - stack --no-terminal build --haddock --no-haddock-deps
+  - stack --no-terminal build --haddock --haddock-deps
