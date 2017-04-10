@@ -2,3 +2,5 @@ resolver: ghc-8.3.20170403
 compiler-check: newer-minor
 allow-newer: true
 system-ghc: true
+extra-deps:
+- ghc-paths-0.1.0.9
