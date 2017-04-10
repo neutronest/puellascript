@@ -1,1 +1,4 @@
-resolver: nightly-2017-04-06
+resolver: ghc-8.3.20170403
+compiler-check: newer-minor
+allow-newer: true
+system-ghc: true
