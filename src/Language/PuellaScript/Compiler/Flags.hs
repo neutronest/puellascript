@@ -1,43 +1,24 @@
-{-# LANGUAGE ApplicativeDo #-}
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE Strict #-}
+{-# LANGUAGE StrictData #-}
 
 module Language.PuellaScript.Compiler.Flags where
 
-import Data.Functor
 import qualified DynFlags as GHC
-import qualified GHC
-import qualified GHC.Paths as GHC
+import qualified HscTypes as GHC
 
-data Flag = Flag
+data Flags = Flags
     { importPaths :: [FilePath]
     , targets :: [String]
     , fatalMessager :: GHC.FatalMessager
-    , flushOut :: GHC.FlushOut
-    , logFinaliser :: GHC.LogFinaliser
-    , libDir :: Maybe FilePath
+    , coreHook :: GHC.CgGuts -> GHC.ModSummary -> IO ()
+    , cmmHook :: FilePath -> IO ()
     }
 
-defaultFlag :: Flag
-defaultFlag =
-    Flag
+defaultFlags :: Flags
+defaultFlags =
+    Flags
     { importPaths = []
     , targets = []
     , fatalMessager = GHC.defaultFatalMessager
-    , flushOut = GHC.defaultFlushOut
-    , logFinaliser = const $ pure ()
-    , libDir = Just GHC.libdir
+    , coreHook = \_ _ -> pure ()
+    , cmmHook = \_ -> pure ()
     }
-
-applyFlag
-    :: GHC.GhcMonad m
-    => Flag -> m ()
-applyFlag Flag {..} = do
-    dflags <- GHC.getProgramDynFlags
-    void $
-        GHC.setProgramDynFlags
-            dflags
-            { GHC.importPaths = importPaths ++ GHC.importPaths dflags
-            , GHC.log_finaliser = logFinaliser
-            }
-    traverse (`GHC.guessTarget` Nothing) targets >>= GHC.setTargets
