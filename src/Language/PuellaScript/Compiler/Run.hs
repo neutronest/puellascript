@@ -36,12 +36,15 @@ run flags =
         void $
             GHC.setSessionDynFlags
                 dflags
-                { GHC.verbosity = 3
+                { GHC.ghcLink = GHC.NoLink
+                , GHC.hscTarget = GHC.HscAsm
+                , GHC.verbosity = 3
                 , GHC.optLevel = 2
                 , GHC.importPaths = importPaths flags ++ GHC.importPaths dflags
                 , GHC.hooks =
                       GHC.emptyHooks {GHC.runPhaseHook = Just run_phase_hook}
                 , GHC.language = Just GHC.Haskell2010
+                , GHC.log_action = logAction flags
                 }
         sequence [GHC.guessTarget t Nothing | t <- targets flags] >>=
             GHC.setTargets

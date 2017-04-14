@@ -13,6 +13,7 @@ data Flags = Flags
     { importPaths :: [FilePath]
     , targets :: [String]
     , fatalMessager :: GHC.FatalMessager
+    , logAction :: GHC.LogAction
     , coreHook :: GHC.ModSummary -> GHC.CgGuts -> IO ()
     , corePrepHook :: GHC.ModSummary -> GHC.CoreProgram -> IO ()
     , stgFromCoreHook :: GHC.ModSummary -> [GHC.StgTopBinding] -> IO ()
@@ -28,6 +29,7 @@ defaultFlags =
     { importPaths = []
     , targets = []
     , fatalMessager = GHC.defaultFatalMessager
+    , logAction = GHC.defaultLogAction
     , coreHook = \_ _ -> pure ()
     , corePrepHook = \_ _ -> pure ()
     , stgFromCoreHook = \_ _ -> pure ()

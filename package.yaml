@@ -1,7 +1,7 @@
 name: puellascript
 version: 0.0.1
 category: Language
-synopsis: An experimental Haskell to JavaScript compiler.
+synopsis: A proof-of-concept Haskell to WebAssembly compiler.
 stability: alpha
 maintainer: Shao Cheng <astrohavoc@gmail.com>
 copyright: (c) 2017 Shao Cheng
