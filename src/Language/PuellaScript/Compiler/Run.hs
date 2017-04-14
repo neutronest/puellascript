@@ -20,7 +20,6 @@ import qualified Hooks as GHC
 import qualified HscMain as GHC
 import qualified HscTypes as GHC
 import Language.PuellaScript.Compiler.Flags
-import qualified Platform as GHC
 import qualified ProfInit as GHC
 import qualified SimplStg as GHC
 import qualified StgCmm
@@ -34,18 +33,19 @@ run flags =
     GHC.runGhc (Just GHC.libdir) $ do
         dflags <- GHC.getSessionDynFlags
         void $
-            GHC.setSessionDynFlags
-                dflags
-                { GHC.ghcLink = GHC.NoLink
-                , GHC.hscTarget = GHC.HscAsm
-                , GHC.verbosity = 3
-                , GHC.optLevel = 2
-                , GHC.importPaths = importPaths flags ++ GHC.importPaths dflags
-                , GHC.hooks =
-                      GHC.emptyHooks {GHC.runPhaseHook = Just run_phase_hook}
-                , GHC.language = Just GHC.Haskell2010
-                , GHC.log_action = logAction flags
-                }
+            GHC.setSessionDynFlags $
+            dflags
+            { GHC.ghcLink = GHC.NoLink
+            , GHC.hscTarget = GHC.HscAsm
+            , GHC.verbosity = 3
+            , GHC.optLevel = 2
+            , GHC.importPaths = importPaths flags ++ GHC.importPaths dflags
+            , GHC.hooks =
+                  GHC.emptyHooks {GHC.runPhaseHook = Just run_phase_hook}
+            , GHC.log_action = logAction flags
+            } `GHC.lang_set`
+            Just GHC.Haskell2010 `GHC.gopt_set`
+            GHC.Opt_SplitSections
         sequence [GHC.guessTarget t Nothing | t <- targets flags] >>=
             GHC.setTargets
         sflag <- GHC.load GHC.LoadAllTargets
@@ -92,37 +92,22 @@ run flags =
                                     cost_centre_info
                                     stg_binds
                                     cg_hpc_info
-                            cmms
-                                | GHC.gopt GHC.Opt_SplitObjs dflags ||
-                                      GHC.gopt GHC.Opt_SplitSections dflags ||
-                                      GHC.osSubsectionsViaSymbols
-                                          (GHC.platformOS
-                                               (GHC.targetPlatform dflags)) =
-                                    let run_pipeline us' cmmgroup = do
-                                            let (topSRT', us'') =
-                                                    GHC.initUs us' GHC.emptySRT
-                                            (topSRT, cmmgroup') <-
-                                                GHC.cmmPipeline
-                                                    hsc_env
-                                                    topSRT'
-                                                    cmmgroup
-                                            let srt
-                                                    | GHC.isEmptySRT topSRT = []
-                                                    | otherwise =
-                                                        GHC.srtToData topSRT
-                                            pure (us'', srt ++ cmmgroup')
-                                    in void $
-                                       Stream.mapAccumL
-                                           run_pipeline
-                                           us
-                                           cmm_stream
-                                | otherwise = do
-                                    topSRT <-
-                                        Stream.mapAccumL
-                                            (GHC.cmmPipeline hsc_env)
-                                            (GHC.initUs_ us GHC.emptySRT)
-                                            cmm_stream
-                                    Stream.yield (GHC.srtToData topSRT)
+                            cmms =
+                                let run_pipeline us' cmmgroup = do
+                                        let (topSRT', us'') =
+                                                GHC.initUs us' GHC.emptySRT
+                                        (topSRT, cmmgroup') <-
+                                            GHC.cmmPipeline
+                                                hsc_env
+                                                topSRT'
+                                                cmmgroup
+                                        let srt
+                                                | GHC.isEmptySRT topSRT = []
+                                                | otherwise =
+                                                    GHC.srtToData topSRT
+                                        pure (us'', srt ++ cmmgroup')
+                                in void $
+                                   Stream.mapAccumL run_pipeline us cmm_stream
                         cmmFromStgHook flags mod_summary cmm_stream
                         cmmHook flags mod_summary cmms
                         rawcmms <- GHC.cmmToRawCmm dflags cmms
