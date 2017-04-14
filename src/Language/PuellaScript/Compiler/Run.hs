@@ -39,11 +39,10 @@ run flags =
         -> GHC.DynFlags
         -> GHC.CompPipeline (GHC.PhasePlus, FilePath)
     run_phase_hook phase_plus input_fn dflags = do
-        result@(_, output_fn) <- GHC.runPhase phase_plus input_fn dflags
+        result <- GHC.runPhase phase_plus input_fn dflags
         liftIO $
             case phase_plus of
-                GHC.HscOut _ _ (GHC.HscRecomp cg_guts mod_summary) -> do
+                GHC.HscOut _ _ (GHC.HscRecomp cg_guts mod_summary) ->
                     coreHook flags cg_guts mod_summary
-                    cmmHook flags output_fn
                 _ -> pure ()
         pure result
