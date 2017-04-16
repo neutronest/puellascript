@@ -8,6 +8,85 @@
 @package puellascript
 @version 0.0.1
 
+module GHC.Orphans
+instance GHC.Show.Show Cmm.Section
+instance (GHC.Show.Show d, GHC.Show.Show h, GHC.Show.Show g) => GHC.Show.Show (Cmm.GenCmmDecl d h g)
+instance GHC.Show.Show CmmExpr.CmmLit
+instance GHC.Show.Show Cmm.CmmStatic
+instance GHC.Show.Show Cmm.CmmStatics
+instance GHC.Show.Show CmmNode.CmmTickScope
+instance GHC.Show.Show Module.Module
+instance GHC.Show.Show CostCentre.IsCafCC
+instance GHC.Show.Show CostCentre.CostCentre
+instance GHC.Show.Show id => GHC.Show.Show (CoreSyn.Tickish id)
+instance GHC.Show.Show CmmExpr.LocalReg
+instance GHC.Show.Show CmmExpr.CmmReg
+instance GHC.Show.Show CmmExpr.Area
+instance GHC.Show.Show CmmExpr.CmmExpr
+instance GHC.Show.Show ForeignCall.CCallConv
+instance GHC.Show.Show CmmType.ForeignHint
+instance GHC.Show.Show CmmNode.CmmReturnInfo
+instance GHC.Show.Show CmmNode.ForeignConvention
+instance GHC.Show.Show CmmNode.ForeignTarget
+instance (GHC.Show.Show e, GHC.Show.Show x) => GHC.Show.Show (CmmNode.CmmNode e x)
+instance GHC.Show.Show Compiler.Hoopl.Block.C
+instance GHC.Show.Show Compiler.Hoopl.Block.O
+instance (GHC.Show.Show (n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.O), GHC.Show.Show (n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.O), GHC.Show.Show (n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.C), GHC.Show.Show (n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.C)) => GHC.Show.Show (Compiler.Hoopl.Block.Block n e x)
+instance GHC.Show.Show t => GHC.Show.Show (Compiler.Hoopl.Block.MaybeO ex t)
+instance (GHC.Show.Show (block n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.O), GHC.Show.Show (block n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.O), GHC.Show.Show (block n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.C), GHC.Show.Show (block n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.C)) => GHC.Show.Show (Compiler.Hoopl.Graph.Graph' block n e x)
+instance (GHC.Show.Show (n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.O), GHC.Show.Show (n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.O), GHC.Show.Show (n Compiler.Hoopl.Block.O Compiler.Hoopl.Block.C), GHC.Show.Show (n Compiler.Hoopl.Block.C Compiler.Hoopl.Block.C)) => GHC.Show.Show (Cmm.GenCmmGraph n)
+instance GHC.Show.Show SMRep.ArgDescr
+instance GHC.Show.Show SMRep.ClosureTypeInfo
+instance GHC.Show.Show SMRep.SMRep
+instance GHC.Show.Show Cmm.ProfilingInfo
+instance GHC.Show.Show Cmm.C_SRT
+instance GHC.Show.Show Cmm.CmmInfoTable
+instance GHC.Show.Show Cmm.CmmStackInfo
+instance GHC.Show.Show Cmm.CmmTopInfo
+instance GHC.Show.Show BasicTypes.FunctionOrData
+instance (GHC.Show.Show tyvar, GHC.Show.Show argf) => GHC.Show.Show (Var.TyVarBndr tyvar argf)
+instance GHC.Show.Show Var.ArgFlag
+instance GHC.Show.Show TyCoRep.TyLit
+instance GHC.Show.Show TyCoRep.Type
+instance GHC.Show.Show Literal.Literal
+instance GHC.Show.Show occ => GHC.Show.Show (StgSyn.GenStgArg occ)
+instance GHC.Show.Show PrimOp.PrimOpVecCat
+instance GHC.Show.Show PrimOp.PrimOp
+instance GHC.Show.Show PrimOp.PrimCall
+instance GHC.Show.Show ForeignCall.CCallTarget
+instance GHC.Show.Show ForeignCall.CCallSpec
+instance GHC.Show.Show ForeignCall.ForeignCall
+instance GHC.Show.Show StgSyn.StgOp
+instance GHC.Show.Show StgSyn.AltType
+instance GHC.Show.Show CoreSyn.AltCon
+instance (GHC.Show.Show bndr, GHC.Show.Show occ) => GHC.Show.Show (StgSyn.GenStgExpr bndr occ)
+instance GHC.Show.Show StgSyn.UpdateFlag
+instance (GHC.Show.Show bndr, GHC.Show.Show occ) => GHC.Show.Show (StgSyn.GenStgRhs bndr occ)
+instance (GHC.Show.Show bndr, GHC.Show.Show occ) => GHC.Show.Show (StgSyn.GenStgBinding bndr occ)
+instance (GHC.Show.Show bndr, GHC.Show.Show occ) => GHC.Show.Show (StgSyn.GenStgTopBinding bndr occ)
+instance GHC.Show.Show b => GHC.Show.Show (CoreSyn.Expr b)
+instance GHC.Show.Show b => GHC.Show.Show (CoreSyn.Bind b)
+instance GHC.Show.Show HscTypes.ForeignStubs
+instance GHC.Show.Show Module.InstalledUnitId
+instance GHC.Show.Show HscTypes.HpcInfo
+instance GHC.Show.Show ByteCodeTypes.CgBreakInfo
+instance GHC.Show.Show ByteCodeTypes.ModBreaks
+instance GHC.Show.Show HscTypes.SptEntry
+instance GHC.Show.Show HscTypes.CgGuts
+instance GHC.Show.Show CLabel.CLabel
+instance GHC.Show.Show Module.ModuleName
+instance GHC.Show.Show CmmType.CmmType
+instance GHC.Show.Show SMRep.StgHalfWord
+instance GHC.Show.Show Var.Var
+instance GHC.Show.Show TyCon.TyCon
+instance GHC.Show.Show TyCoRep.Coercion
+instance GHC.Show.Show DataCon.DataCon
+instance GHC.Show.Show CostCentre.CostCentreStack
+instance GHC.Show.Show StgSyn.StgBinderInfo
+instance GHC.Show.Show Outputable.SDoc
+instance GHC.Show.Show (GHCi.RemoteTypes.ForeignRef a)
+instance GHC.Show.Show OccName.OccName
+
 module Language.PuellaScript.Compiler.Flags
 data Flags
 Flags :: [FilePath] -> [String] -> FatalMessager -> LogAction -> (ModSummary -> CgGuts -> IO ()) -> (ModSummary -> CoreProgram -> IO ()) -> (ModSummary -> [StgTopBinding] -> IO ()) -> (ModSummary -> [StgTopBinding] -> IO ()) -> (ModSummary -> Stream IO CmmGroup () -> IO ()) -> (ModSummary -> Stream IO CmmGroup () -> IO ()) -> (ModSummary -> Stream IO RawCmmGroup () -> IO ()) -> Flags
