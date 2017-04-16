@@ -18,7 +18,9 @@ ghc-options: -Wall
 dependencies:
   - base >= 4.10 && < 5
   - ghc
+  - ghci
   - ghc-paths
+  - hoopl
 
 library:
   source-dirs: src
