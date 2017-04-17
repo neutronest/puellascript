@@ -29,43 +29,43 @@ import qualified TyCon as GHC
 import qualified Var as GHC
 
 instance Show GHC.CLabel where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.ModuleName where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.CmmType where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.StgHalfWord where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.Var where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.TyCon where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.Coercion where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.DataCon where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.CostCentreStack where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.StgBinderInfo where
-    show = const "<StgBinderInfo>"
+    show = const "\"StgBinderInfo\""
 
 instance Show GHC.SDoc where
-    show = GHC.showSDocUnsafe
+    show = show . GHC.showSDocUnsafe
 
 instance Show (GHC.ForeignRef a) where
-    show = const "<ForeignRef a>"
+    show = const "\"ForeignRef a\""
 
 instance Show GHC.OccName where
-    show = GHC.showSDocUnsafe . GHC.ppr
+    show = show . GHC.showSDocUnsafe . GHC.ppr
 
 deriving instance Show GHC.Section
 
