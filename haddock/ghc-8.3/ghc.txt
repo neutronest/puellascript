@@ -66,7 +66,8 @@ utf8DecodeChar# :: Addr# -> (# Char#, Int# #)
 utf8PrevChar :: Ptr Word8 -> IO (Ptr Word8)
 utf8CharStart :: Ptr Word8 -> IO (Ptr Word8)
 utf8DecodeChar :: Ptr Word8 -> (Char, Int)
-utf8DecodeString :: Ptr Word8 -> Int -> IO [Char]
+utf8DecodeByteString :: ByteString -> [Char]
+utf8DecodeStringLazy :: ForeignPtr Word8 -> Int -> Int -> [Char]
 utf8EncodeChar :: Char -> Ptr Word8 -> IO (Ptr Word8)
 utf8EncodeString :: Ptr Word8 -> String -> IO ()
 utf8EncodedLength :: String -> Int
@@ -2451,6 +2452,10 @@ offsetBytes :: Int -> StringBuffer -> StringBuffer
 --   the <a>StringBuffer</a>s use separate buffers.
 byteDiff :: StringBuffer -> StringBuffer -> Int
 
+-- | Computes a <a>StringBuffer</a> which points to the first character of
+--   the wanted line. Lines begin at 1.
+atLine :: Int -> StringBuffer -> Maybe StringBuffer
+
 -- | Decode the first <tt>n</tt> bytes of a <a>StringBuffer</a> as UTF-8
 --   into a <a>String</a>. Similar to <a>utf8DecodeChar</a>, if the
 --   character cannot be decoded as UTF-8, they will be replaced with '\0'.
@@ -3644,7 +3649,7 @@ filterUDFM_Directly :: (Unique -> elt -> Bool) -> UniqDFM elt -> UniqDFM elt
 isNullUDFM :: UniqDFM elt -> Bool
 sizeUDFM :: UniqDFM elt -> Int
 intersectUDFM :: UniqDFM elt -> UniqDFM elt -> UniqDFM elt
-udfmIntersectUFM :: UniqDFM elt -> UniqFM elt -> UniqDFM elt
+udfmIntersectUFM :: UniqDFM elt1 -> UniqFM elt2 -> UniqDFM elt1
 intersectsUDFM :: UniqDFM elt -> UniqDFM elt -> Bool
 disjointUDFM :: UniqDFM elt -> UniqDFM elt -> Bool
 disjointUdfmUfm :: UniqDFM elt -> UniqFM elt2 -> Bool
@@ -3698,8 +3703,9 @@ addListToUniqDSet :: Uniquable a => UniqDSet a -> [a] -> UniqDSet a
 unionUniqDSets :: UniqDSet a -> UniqDSet a -> UniqDSet a
 unionManyUniqDSets :: [UniqDSet a] -> UniqDSet a
 minusUniqDSet :: UniqDSet a -> UniqDSet a -> UniqDSet a
-uniqDSetMinusUniqSet :: UniqDSet a -> UniqSet a -> UniqDSet a
+uniqDSetMinusUniqSet :: UniqDSet a -> UniqSet b -> UniqDSet a
 intersectUniqDSets :: UniqDSet a -> UniqDSet a -> UniqDSet a
+uniqDSetIntersectUniqSet :: UniqDSet a -> UniqSet b -> UniqDSet a
 intersectsUniqDSets :: UniqDSet a -> UniqDSet a -> Bool
 foldUniqDSet :: (a -> b -> b) -> b -> UniqDSet a -> b
 elementOfUniqDSet :: Uniquable a => a -> UniqDSet a -> Bool
@@ -12321,6 +12327,7 @@ unionDVarSets :: [DVarSet] -> DVarSet
 -- | Map the function over the list, and union the results
 mapUnionDVarSet :: (a -> DVarSet) -> [a] -> DVarSet
 intersectDVarSet :: DVarSet -> DVarSet -> DVarSet
+dVarSetIntersectVarSet :: DVarSet -> VarSet -> DVarSet
 
 -- | True if non-empty intersection
 intersectsDVarSet :: DVarSet -> DVarSet -> Bool
@@ -18578,7 +18585,6 @@ mkAsmTempEndLabel :: CLabel -> CLabel
 -- | Construct a label for a DWARF Debug Information Entity (DIE)
 --   describing another symbol.
 mkAsmTempDieLabel :: CLabel -> CLabel
-mkPlainModuleInitLabel :: Module -> CLabel
 mkSplitMarkerLabel :: CLabel
 mkDirty_MUT_VAR_Label :: CLabel
 mkUpdInfoLabel :: CLabel
