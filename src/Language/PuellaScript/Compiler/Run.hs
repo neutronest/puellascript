@@ -57,13 +57,9 @@ run flags =
         -> GHC.CompPipeline (GHC.PhasePlus, FilePath)
     run_phase_hook phase_plus input_fn dflags =
         case phase_plus of
-            GHC.HscOut src_flavour _ (GHC.HscRecomp cg_guts@GHC.CgGuts {..} mod_summary) -> do
+            GHC.HscOut _ _ (GHC.HscRecomp cg_guts@GHC.CgGuts {..} mod_summary) -> do
                 liftIO $ coreHook flags mod_summary cg_guts
                 GHC.PipeState {..} <- GHC.getPipeState
-                let hsc_lang = GHC.hscTarget dflags
-                    next_phase =
-                        GHC.hscPostBackendPhase dflags src_flavour hsc_lang
-                output_fn <- GHC.phaseOutputFilename next_phase
                 liftIO $ do
                     let data_tycons = filter GHC.isDataTyCon cg_tycons
                         location = GHC.ms_location mod_summary
@@ -106,8 +102,6 @@ run flags =
                     cmmHook flags mod_summary cmms
                     rawcmms <- GHC.cmmToRawCmm dflags cmms
                     cmmRawHook flags mod_summary rawcmms
-                pure (GHC.RealPhase next_phase, output_fn)
-            GHC.RealPhase (GHC.As _) -> do
                 output_fn <- GHC.phaseOutputFilename GHC.StopLn
                 liftIO $ writeFile output_fn ""
                 pure (GHC.RealPhase GHC.StopLn, output_fn)
