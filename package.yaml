@@ -21,6 +21,7 @@ dependencies:
   - ghci
   - ghc-paths
   - hoopl
+  - template-haskell
 
 library:
   source-dirs: src

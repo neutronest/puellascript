@@ -15,6 +15,7 @@ import qualified CoreSyn as GHC
 import qualified CostCentre as GHC
 import qualified DataCon as GHC
 import qualified ForeignCall as GHC
+import GHC.Unexported
 import qualified GHCi.RemoteTypes as GHC
 import qualified HscTypes as GHC
 import qualified Literal as GHC
@@ -56,7 +57,7 @@ instance Show GHC.CostCentreStack where
     show = show . GHC.showSDocUnsafe . GHC.ppr
 
 instance Show GHC.StgBinderInfo where
-    show = const "\"StgBinderInfo\""
+    show = showStgBinderInfo
 
 instance Show GHC.SDoc where
     show = show . GHC.showSDocUnsafe
