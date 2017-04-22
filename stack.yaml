@@ -1,4 +1,4 @@
-resolver: ghc-8.3.20170419
+resolver: ghc-8.3.20170422
 skip-ghc-check: true
 allow-newer: true
 system-ghc: true
