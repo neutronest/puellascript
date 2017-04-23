@@ -12,6 +12,7 @@ import qualified Stream as GHC
 data Flags = Flags
     { importPaths :: [FilePath]
     , targets :: [String]
+    , packageDBFlags :: [GHC.PackageDBFlag]
     , fatalMessager :: GHC.FatalMessager
     , logAction :: GHC.LogAction
     , coreHook :: GHC.ModSummary -> GHC.CgGuts -> IO ()
@@ -28,6 +29,7 @@ defaultFlags =
     Flags
     { importPaths = []
     , targets = []
+    , packageDBFlags = []
     , fatalMessager = GHC.defaultFatalMessager
     , logAction = GHC.defaultLogAction
     , coreHook = \_ _ -> pure ()
