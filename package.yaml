@@ -17,12 +17,10 @@ ghc-options: -Wall
 
 dependencies:
   - base >= 4.10 && < 5
-  - Cabal
   - ghc
   - ghci
   - ghc-paths
   - hoopl
-  - process
 
 library:
   source-dirs: src
