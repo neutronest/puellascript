@@ -13,6 +13,12 @@ Currently we can extract multiple IRs from a set of target modules by invoking `
 
 This project works with GHC HEAD. [haddock docs](https://terrorjack.github.io/puellascript/haddock) is available (not always in sync though).
 
+## Building
+
+When using `cabal` to build, make sure to specify a package database other than the global/user package database (for example, a sandbox). The `Setup.hs` script assumes `puellascript` is installed to a `SpecificPackageDB` and that package database will be used for booting.
+
+`stack ghci` is broken for now, use `cabal repl` for interactive development.
+
 ## Booting
 
 Run `boot.sh` to boot. The boot directory is hard-coded to `$PWD/.boot`. This requires `ghc` and `ghc-pkg` of GHC HEAD present on `$PATH`.
