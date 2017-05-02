@@ -13,6 +13,7 @@ custom-setup:
     - base
     - binary
     - Cabal
+    - filepath
 
 extra-source-files:
   - LICENSE
@@ -32,3 +33,11 @@ dependencies:
 
 library:
   source-dirs: src
+
+executables:
+  phc:
+    source-dirs: app
+    main: phc.hs
+    dependencies:
+      - puellascript
+

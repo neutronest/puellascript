@@ -13,3 +13,6 @@ libDir = LIBDIR
 
 pkgDb :: FilePath
 pkgDb = PKGDB
+
+phc :: FilePath
+phc = PHC
