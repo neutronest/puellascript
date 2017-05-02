@@ -28,7 +28,7 @@ main =
                           (fromFlag (configVerbosity flags))
                           ghc
                           ["--print-libdir"]
-                  let libdir = takeWhile (\c -> not $ isSpace c) libdir'
+                  let libdir = takeWhile (not . isSpace) libdir'
                   encodeFile biPath $
                       emptyBuildInfo
                       { cppOptions =

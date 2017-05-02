@@ -23,12 +23,12 @@ ghc-options: -Wall
 
 dependencies:
   - base >= 4.10 && < 5
+  - directory
   - filepath
   - ghc
   - ghci
   - hoopl
   - process
-  - template-haskell
 
 library:
   source-dirs: src
