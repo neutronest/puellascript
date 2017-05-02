@@ -24,3 +24,4 @@ cabal.sandbox.config
 puellascript.cabal
 .boot/
 Setup
+puellascript.buildinfo

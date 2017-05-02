@@ -8,6 +8,12 @@ copyright: (c) 2017 Shao Cheng
 license: BSD3
 github: TerrorJack/puellascript
 
+custom-setup:
+  dependencies:
+    - base
+    - binary
+    - Cabal
+
 extra-source-files:
   - LICENSE
   - README.md
@@ -17,10 +23,12 @@ ghc-options: -Wall
 
 dependencies:
   - base >= 4.10 && < 5
+  - filepath
   - ghc
   - ghci
-  - ghc-paths
   - hoopl
+  - process
+  - template-haskell
 
 library:
   source-dirs: src

@@ -1,6 +1,4 @@
-resolver: ghc-8.3.20170425
+resolver: ghc-8.3.20170430
 skip-ghc-check: true
 allow-newer: true
 system-ghc: true
-extra-deps:
-  - ghc-paths-0.1.0.9

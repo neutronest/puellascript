@@ -15,11 +15,11 @@ import qualified DriverPhases as GHC
 import qualified DriverPipeline as GHC
 import qualified DynFlags as GHC
 import qualified GHC
-import qualified GHC.Paths as GHC
 import qualified Hooks as GHC
 import qualified HscMain as GHC
 import qualified HscTypes as GHC
 import Language.PuellaScript.Compiler.Flags
+import Language.PuellaScript.Compiler.SelfBuildInfo
 import qualified SimplStg as GHC
 import qualified StgCmm
 import qualified Stream
@@ -29,7 +29,7 @@ import qualified UniqSupply as GHC
 run :: Flags -> IO ()
 run flags =
     GHC.defaultErrorHandler (fatalMessager flags) GHC.defaultFlushOut $
-    GHC.runGhc (Just GHC.libdir) $ do
+    GHC.runGhc (Just libDir) $ do
         dflags <- GHC.getSessionDynFlags
         void $
             GHC.setSessionDynFlags $
