@@ -59,6 +59,7 @@ main =
                   postConf simpleUserHooks _args flags pkg_descr lbi
         , preBuild = preAny
         , preRepl = preAny
+        , preHaddock = preAny
         }
   where
     biPath = "puellascript.buildinfo"
