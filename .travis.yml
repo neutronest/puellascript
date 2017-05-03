@@ -30,5 +30,5 @@ before_install:
 install: true
 
 script:
-  - stack --no-terminal build --haddock --haddock-deps
+  - stack --no-terminal install --haddock --haddock-deps
   - sh ./boot.sh
