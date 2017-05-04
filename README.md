@@ -17,11 +17,13 @@ This project works with GHC HEAD. [haddock docs](https://terrorjack.github.io/pu
 
 When using `cabal` to build, make sure to specify a package database other than the global/user package database (for example, a sandbox). The `Setup.hs` script assumes `puellascript` is installed to a `SpecificPackageDB` and that package database will be used for booting.
 
-`stack ghci` is broken for now, use `cabal repl` for interactive development.
+This project depends solely on ghc boot libraries, so you can also use `ghc Setup.hs && ./Setup ...` to do the job.
+
+`stack ghci` is broken for now, use `cabal` for interactive development.
 
 ## Booting
 
-Run `boot.sh` to boot. The boot directory is hard-coded to `$PWD/.boot`. This requires `ghc` and `ghc-pkg` of GHC HEAD present on `$PATH`.
+Run `boot.sh` to boot. The boot directory is hard-coded to `$PWD/.boot`. This requires `ghc`, `ghc-pkg` and `phc` (our wrapper program of `ghc`) present on `$PATH`.
 
 The booting process will create a fresh package database and install `rts`, `ghc-prim`, `integer-gmp` and `base`. The source code is ported from ghc repository. All C source files and `foreign import`s are stripped and replaced with dummy implementations. We don't need those anyway, since the real purpose is to retrieve STG/Cmm for wired-in packages, and lots of them won't be supported in the forseeable future.
 
